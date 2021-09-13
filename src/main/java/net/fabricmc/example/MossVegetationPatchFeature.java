@@ -107,9 +107,9 @@ public class MossVegetationPatchFeature extends Feature<VegetationPatchFeatureCo
     protected boolean generateVegetationFeature(StructureWorldAccess world, VegetationPatchFeatureConfig config, ChunkGenerator generator, Random random, BlockPos pos) {
         BlockState toReplace = world.getBlockState(pos);
         if(toReplace.isIn(BlockTags.FLOWERS) || toReplace.isOf(Blocks.GRASS) || toReplace.isOf(Blocks.TALL_GRASS) || toReplace.isOf(Blocks.BIG_DRIPLEAF) || toReplace.isOf(Blocks.BIG_DRIPLEAF_STEM) || toReplace.isOf(Blocks.SMALL_DRIPLEAF)) {
-            return (config.vegetationFeature.get()).generate(world, generator, random, pos.offset(config.surface.getDirection().getOpposite()));
-        }else {
             return false;
+        }else {
+            return (config.vegetationFeature.get()).generate(world, generator, random, pos.offset(config.surface.getDirection().getOpposite()));
         }
     }
 
