@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "moss_fix",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Moss Fix",
+  "description": "fixes moss to generate with blocks above it, and on sand",
   "authors": [
-    "Me!"
+    "gamma_02"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
