@@ -14,6 +14,7 @@ import java.util.function.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.AbstractBlock.AbstractBlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.math.BlockPos;
@@ -21,10 +22,10 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.VegetationPatchFeatureConfig;
 import net.minecraft.world.gen.feature.util.FeatureContext;
+import org.lwjgl.system.CallbackI;
 
 public class MossVegetationPatchFeature extends Feature<VegetationPatchFeatureConfig> {
     public MossVegetationPatchFeature(Codec<VegetationPatchFeatureConfig> codec) {
@@ -62,21 +63,21 @@ public class MossVegetationPatchFeature extends Feature<VegetationPatchFeatureCo
                 if (!bl4 && (!bl5 || config.extraEdgeColumnChance != 0.0F && !(random.nextFloat() > config.extraEdgeColumnChance))) {
                     mutable.set(pos, i, 0, j);
 
-                    int k;
-                    for(k = 0; world.testBlockState(mutable, AbstractBlockState::hasSidedTransparency) && k < config.verticalRange; ++k) {
-                        System.out.println("33");
-                        mutable.move(direction);
-                    }
-
-                    for(k = 0; world.testBlockState(mutable, (blockStatex) -> {
-                        return true;
-                    }) && k < config.verticalRange; ++k) {
-                        mutable.move(direction2);
-                    }
+//                    int k;
+//                    for(k = 0; world.testBlockState(mutable, AbstractBlockState::isAir) && k < config.verticalRange; ++k) {
+//                        mutable.move(direction);
+//                    }
+//
+//                    for(k = 0; world.testBlockState(mutable, (blockStatex) -> {
+//                        return !blockStatex.isAir();
+//                    }) && k < config.verticalRange; ++k) {
+//                        mutable.move(direction2);
+//                    }
 
                     mutable2.set(mutable, config.surface.getDirection());
                     BlockState blockState = world.getBlockState(mutable2);
-                    if (blockState.isSideSolidFullSquare(world, mutable2, config.surface.getDirection().getOpposite())) {
+                    BlockState firstState = world.getBlockState(mutable);
+                    if (firstState.isIn(BlockTags.FLOWERS) || firstState.isOf(Blocks.GRASS) || firstState.isOf(Blocks.TALL_GRASS) || world.isAir(mutable) || firstState.isOf(Blocks.BIG_DRIPLEAF) || firstState.isOf(Blocks.BIG_DRIPLEAF_STEM) || firstState.isOf(Blocks.SMALL_DRIPLEAF)) {
                         int l = config.depth.get(random) + (config.extraBottomBlockChance > 0.0F && random.nextFloat() < config.extraBottomBlockChance ? 1 : 0);
                         BlockPos blockPos = mutable2.toImmutable();
                         boolean bl6 = this.placeGround(world, config, replaceable, random, mutable2, l);
@@ -104,7 +105,12 @@ public class MossVegetationPatchFeature extends Feature<VegetationPatchFeatureCo
     }
 
     protected boolean generateVegetationFeature(StructureWorldAccess world, VegetationPatchFeatureConfig config, ChunkGenerator generator, Random random, BlockPos pos) {
-        return (config.vegetationFeature.get()).generate(world, generator, random, pos.offset(config.surface.getDirection().getOpposite()));
+        BlockState toReplace = world.getBlockState(pos);
+        if(toReplace.isIn(BlockTags.FLOWERS) || toReplace.isOf(Blocks.GRASS) || toReplace.isOf(Blocks.TALL_GRASS) || toReplace.isOf(Blocks.BIG_DRIPLEAF) || toReplace.isOf(Blocks.BIG_DRIPLEAF_STEM) || toReplace.isOf(Blocks.SMALL_DRIPLEAF)) {
+            return (config.vegetationFeature.get()).generate(world, generator, random, pos.offset(config.surface.getDirection().getOpposite()));
+        }else {
+            return false;
+        }
     }
 
     protected boolean placeGround(StructureWorldAccess world, VegetationPatchFeatureConfig config, Predicate<BlockState> replaceable, Random random, Mutable pos, int depth) {

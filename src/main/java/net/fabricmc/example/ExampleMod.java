@@ -18,7 +18,9 @@ import static net.minecraft.world.gen.feature.ConfiguredFeatures.MOSS_VEGETATION
 
 public class ExampleMod implements ModInitializer {
 	public static final Feature<VegetationPatchFeatureConfig> MOSS_PATCH_FEATURE = new MossVegetationPatchFeature(VegetationPatchFeatureConfig.CODEC);
-
+	public static final ConfiguredFeature<VegetationPatchFeatureConfig, ?> MOSS_PATCH = MOSS_PATCH_FEATURE.configure(new VegetationPatchFeatureConfig(BlockTags.MOSS_REPLACEABLE.getId(), new SimpleBlockStateProvider(Blocks.MOSS_BLOCK.getDefaultState()), () -> {
+		return MOSS_VEGETATION;
+	}, VerticalSurfaceType.FLOOR, ConstantIntProvider.create(1), 0.0F, 5, 0.8F, UniformIntProvider.create(4, 7), 0.3F));
 
 	@Override
 	public void onInitialize() {
@@ -26,7 +28,5 @@ public class ExampleMod implements ModInitializer {
 		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier("moss_fix", "moss_patch_configured_feature"), MOSS_PATCH);
 	}
 
-	public static final ConfiguredFeature<VegetationPatchFeatureConfig, ?> MOSS_PATCH = MOSS_PATCH_FEATURE.configure(new VegetationPatchFeatureConfig(BlockTags.MOSS_REPLACEABLE.getId(), new SimpleBlockStateProvider(Blocks.MOSS_BLOCK.getDefaultState()), () -> {
-		return MOSS_VEGETATION;
-	}, VerticalSurfaceType.FLOOR, ConstantIntProvider.create(1), 0.0F, 5, 0.8F, UniformIntProvider.create(4, 7), 0.3F));
+
 }

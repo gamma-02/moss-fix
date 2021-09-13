@@ -4,11 +4,12 @@
   "package": "net.fabricmc.example.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "MossMixin"
   ],
   "server": [
     "MossMixin"
   ],
   "injectors": {
-    "defaultRequire": 1
+    "defaultRequire": 0
   }
 }
