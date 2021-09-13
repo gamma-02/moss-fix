@@ -5,8 +5,8 @@
   "compatibilityLevel": "JAVA_16",
   "mixins": [
   ],
-  "client": [
-    "ExampleMixin"
+  "server": [
+    "MossMixin"
   ],
   "injectors": {
     "defaultRequire": 1
