@@ -63,7 +63,8 @@ public class MossVegetationPatchFeature extends Feature<VegetationPatchFeatureCo
                     mutable.set(pos, i, 0, j);
 
                     int k;
-                    for(k = 0; world.testBlockState(mutable, AbstractBlockState::isAir) && k < config.verticalRange; ++k) {
+                    for(k = 0; world.testBlockState(mutable, AbstractBlockState::hasSidedTransparency) && k < config.verticalRange; ++k) {
+                        System.out.println("33");
                         mutable.move(direction);
                     }
 
