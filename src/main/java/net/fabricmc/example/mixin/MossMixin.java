@@ -24,6 +24,7 @@ public class MossMixin {
         return true;
     }
     @Overwrite
+    /**I have to overwrite because I don't know any other way lol**/
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state){
         ExampleMod.MOSS_PATCH_FEATURE.generate(new FeatureContext(world, world.getChunkManager().getChunkGenerator(), random, pos.up(), ConfiguredFeatures.MOSS_PATCH_BONEMEAL.getConfig()));
         System.out.println("generated");
