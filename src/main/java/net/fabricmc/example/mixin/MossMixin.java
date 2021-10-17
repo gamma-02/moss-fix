@@ -24,7 +24,7 @@ import java.util.Random;
 public class MossMixin {
 
     /**
-     * @author
+     * @author @reason
      */
 
     @Overwrite
@@ -34,9 +34,10 @@ public class MossMixin {
     }
 
     /**
-     * @author
+     * @author @reason
+     * cuz i cant change it otherwise
      */
-    @Overwrite
+    @Overwrite()
     /*I have to overwrite because I don't know any other way lol*/
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state){
         ExampleMod.MOSS_PATCH_FEATURE.generate(new FeatureContext(Optional.empty(), world, world.getChunkManager().getChunkGenerator(), random, pos.up(), ConfiguredFeatures.MOSS_PATCH_BONEMEAL.getConfig()));
