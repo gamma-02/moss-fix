@@ -62,12 +62,11 @@ public class MossVegetationPatchFeature extends Feature<VegetationPatchFeatureCo
                 if (!bl4 && (!bl5 || config.extraEdgeColumnChance != 0.0F && !(random.nextFloat() > config.extraEdgeColumnChance))) {
                     mutable.set(pos, i, 0, j);
 
-                    int k;
-                    for(k = 0; world.testBlockState(mutable, AbstractBlockState::isOpaque) && k < config.verticalRange; ++k) {
+                    int k; //after this code stopped making me cry it was fun :)
+                    for(k=0; world.testBlockState(mutable, MossVegetationPatchFeature::airSubstitute) && k < config.verticalRange; k++){//
                         mutable.move(direction);
                     }
-
-                    for(k = 0; k < config.verticalRange; ++k) {
+                    for(k=0; world.testBlockState(mutable, blockState -> !airSubstitute(blockState)) && k < config.verticalRange; k++){
                         mutable.move(direction2);
                     }
 
@@ -134,5 +133,13 @@ public class MossVegetationPatchFeature extends Feature<VegetationPatchFeatureCo
         } : (state) -> {
             return state.isIn(tag);
         };
+    }
+
+    public static boolean airSubstitute(BlockState state){
+        if(state.isIn(BlockTags.FLOWERS) || state.isOf(Blocks.GRASS) || state.isOf(Blocks.TALL_GRASS) || state.isAir() || state.isOf(Blocks.BIG_DRIPLEAF) || state.isOf(Blocks.BIG_DRIPLEAF_STEM) || state.isOf(Blocks.SMALL_DRIPLEAF)){
+            return true;
+        }else {
+            return false;
+        }
     }
 }
