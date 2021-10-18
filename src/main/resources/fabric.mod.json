@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Moss Fix",
-  "description": "fixes moss to generate with blocks above it, and on sand",
+  "description": "fixes moss to generate with blocks above it, and on sand, and, accidently not up and down for 2 updates. Whops. Sorry. - Gamma_02",
   "authors": [
     "gamma_02"
   ],
@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "net.gamma02.mossfix.MossFix"
     ]
   },
   "mixins": [

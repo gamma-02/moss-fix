@@ -3,7 +3,7 @@
 // (powered by FernFlower decompiler)
 //
 
-package net.fabricmc.example;
+package net.gamma02.mossfix;
 
 import com.mojang.serialization.Codec;
 import java.util.HashSet;
@@ -25,7 +25,6 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.VegetationPatchFeatureConfig;
 import net.minecraft.world.gen.feature.util.FeatureContext;
-import org.lwjgl.system.CallbackI;
 
 public class MossVegetationPatchFeature extends Feature<VegetationPatchFeatureConfig> {
     public MossVegetationPatchFeature(Codec<VegetationPatchFeatureConfig> codec) {
@@ -63,16 +62,14 @@ public class MossVegetationPatchFeature extends Feature<VegetationPatchFeatureCo
                 if (!bl4 && (!bl5 || config.extraEdgeColumnChance != 0.0F && !(random.nextFloat() > config.extraEdgeColumnChance))) {
                     mutable.set(pos, i, 0, j);
 
-//                    int k;
-//                    for(k = 0; world.testBlockState(mutable, AbstractBlockState::isAir) && k < config.verticalRange; ++k) {
-//                        mutable.move(direction);
-//                    }
-//
-//                    for(k = 0; world.testBlockState(mutable, (blockStatex) -> {
-//                        return !blockStatex.isAir();
-//                    }) && k < config.verticalRange; ++k) {
-//                        mutable.move(direction2);
-//                    }
+                    int k;
+                    for(k = 0; world.testBlockState(mutable, AbstractBlockState::isOpaque) && k < config.verticalRange; ++k) {
+                        mutable.move(direction);
+                    }
+
+                    for(k = 0; k < config.verticalRange; ++k) {
+                        mutable.move(direction2);
+                    }
 
                     mutable2.set(mutable, config.surface.getDirection());
                     BlockState blockState = world.getBlockState(mutable2);
