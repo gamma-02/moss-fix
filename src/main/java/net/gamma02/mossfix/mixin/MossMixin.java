@@ -1,8 +1,8 @@
-package net.fabricmc.example.mixin;
+package net.gamma02.mossfix.mixin;
 
 
 
-import net.fabricmc.example.ExampleMod;
+import net.gamma02.mossfix.ExampleMod;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MossBlock;
 import net.minecraft.server.world.ServerWorld;

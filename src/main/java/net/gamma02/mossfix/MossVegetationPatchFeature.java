@@ -3,7 +3,7 @@
 // (powered by FernFlower decompiler)
 //
 
-package net.fabricmc.example;
+package net.gamma02.mossfix;
 
 import com.mojang.serialization.Codec;
 import java.util.HashSet;
@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.function.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.AbstractBlock.AbstractBlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.Tag;
@@ -25,7 +24,6 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.VegetationPatchFeatureConfig;
 import net.minecraft.world.gen.feature.util.FeatureContext;
-import org.lwjgl.system.CallbackI;
 
 public class MossVegetationPatchFeature extends Feature<VegetationPatchFeatureConfig> {
     public MossVegetationPatchFeature(Codec<VegetationPatchFeatureConfig> codec) {
@@ -48,8 +46,8 @@ public class MossVegetationPatchFeature extends Feature<VegetationPatchFeatureCo
     protected Set<BlockPos> placeGroundAndGetPositions(StructureWorldAccess world, VegetationPatchFeatureConfig config, Random random, BlockPos pos, Predicate<BlockState> replaceable, int radiusX, int radiusZ) {
         Mutable mutable = pos.mutableCopy();
         Mutable mutable2 = mutable.mutableCopy();
-        Direction direction = config.surface.getDirection();
-        Direction direction2 = direction.getOpposite();
+        Direction direction = config.surface.getDirection(); System.out.print(direction);
+        Direction direction2 = direction.getOpposite(); System.out.println(direction2);
         Set<BlockPos> set = new HashSet();
 
         for(int i = -radiusX; i <= radiusX; ++i) {
@@ -73,6 +71,15 @@ public class MossVegetationPatchFeature extends Feature<VegetationPatchFeatureCo
 //                    }) && k < config.verticalRange; ++k) {
 //                        mutable.move(direction2);
 //                    }
+                    //REMEMBER: k < config.verticalRange!!!!
+                    int k;
+                    for(k=0; world.testBlockState(mutable, MossVegetationPatchFeature::airSubstitute) && k < config.verticalRange; k++){//
+                        mutable.move(direction);
+                    }
+                    for(k=0; world.testBlockState(mutable, blockState -> !airSubstitute(blockState)) && k < config.verticalRange; k++){
+                        mutable.move(direction2);
+                    }
+
 
                     mutable2.set(mutable, config.surface.getDirection());
                     BlockState blockState = world.getBlockState(mutable2);
@@ -138,4 +145,13 @@ public class MossVegetationPatchFeature extends Feature<VegetationPatchFeatureCo
             return state.isIn(tag);
         };
     }
+
+    public static boolean airSubstitute(BlockState state){
+        if(state.isIn(BlockTags.FLOWERS) || state.isOf(Blocks.GRASS) || state.isOf(Blocks.TALL_GRASS) || state.isAir() || state.isOf(Blocks.BIG_DRIPLEAF) || state.isOf(Blocks.BIG_DRIPLEAF_STEM) || state.isOf(Blocks.SMALL_DRIPLEAF)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 }

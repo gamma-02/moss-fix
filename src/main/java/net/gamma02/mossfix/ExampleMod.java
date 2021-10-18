@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package net.gamma02.mossfix;
 
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.api.ModInitializer;
