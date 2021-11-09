@@ -17,7 +17,7 @@ import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 
 import static net.minecraft.world.gen.feature.ConfiguredFeatures.MOSS_VEGETATION;
 
-public class ExampleMod implements DedicatedServerModInitializer, ModInitializer {
+public class MossFix implements DedicatedServerModInitializer, ModInitializer {
 	public static final Feature<VegetationPatchFeatureConfig> MOSS_PATCH_FEATURE = new MossVegetationPatchFeature(VegetationPatchFeatureConfig.CODEC);
 	public static final ConfiguredFeature<VegetationPatchFeatureConfig, ?> MOSS_PATCH = MOSS_PATCH_FEATURE.configure(new VegetationPatchFeatureConfig(BlockTags.MOSS_REPLACEABLE.getId(), new SimpleBlockStateProvider(Blocks.MOSS_BLOCK.getDefaultState()), () -> {
 		return MOSS_VEGETATION;

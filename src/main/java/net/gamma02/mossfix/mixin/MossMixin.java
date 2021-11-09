@@ -2,7 +2,7 @@ package net.gamma02.mossfix.mixin;
 
 
 
-import net.gamma02.mossfix.ExampleMod;
+import net.gamma02.mossfix.MossFix;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MossBlock;
 import net.minecraft.server.world.ServerWorld;
@@ -26,7 +26,7 @@ public class MossMixin {
     @Overwrite
     /**I have to overwrite because I don't know any other way lol**/
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state){
-        ExampleMod.MOSS_PATCH_FEATURE.generate(new FeatureContext(world, world.getChunkManager().getChunkGenerator(), random, pos.up(), ConfiguredFeatures.MOSS_PATCH_BONEMEAL.getConfig()));
+        MossFix.MOSS_PATCH_FEATURE.generate(new FeatureContext(world, world.getChunkManager().getChunkGenerator(), random, pos.up(), ConfiguredFeatures.MOSS_PATCH_BONEMEAL.getConfig()));
         System.out.println("generated");
     }
 
